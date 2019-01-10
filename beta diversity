@@ -1,0 +1,31 @@
+library(vegan)
+
+r.data<-read.csv("./Desktop/data.csv", header=TRUE)
+data<-data.frame(r.data,row.names=1)
+##data行为OTU，列为某环境的一组数据
+
+data<-t(data)
+
+beta<- vegdist(t2, method="jaccard")
+beta
+
+hc1<- as.dendrogram(hclust(beta, "ave"))
+hc2<- as.dendrogram(hclust(beta, "single") )
+hc3<- as.dendrogram(hclust(beta, "complete") )
+hc4<- as.dendrogram(hclust(beta, "median"))
+hc5<- as.dendrogram(hclust(beta, "mcquitty"))
+
+par(mfrow = c(3, 2))
+##mfrow()图像成组3行2列
+##mar设置图片边界宽，mar=c(3,4,3,4)，距下、左、上、右各3、4、3、4行宽
+##mai设置边界距离，英寸
+
+plot(hc1, horiz=T)
+plot(hc2, horiz=T)
+plot(hc3, horiz=T)
+plot(hc4, horiz=T)
+plot(hc5, horiz=T)
+
+dendro.plot<-as.dendrogram(hc1)
+plot(dendro.plot, horiz=T)
+##horiz图方向为水平或竖直
